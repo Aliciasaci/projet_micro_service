@@ -1,0 +1,63 @@
+syntax = "proto3";
+
+package recette.v1alpha;
+
+message Recette {
+  string nom = 1;
+  string description = 2;
+  repeated string ingredients = 3;
+  string instructions = 4;
+  int32 temps_preparation = 5;
+  int32 temps_cuisson = 6;
+}
+
+service RecetteService {
+  rpc Get (GetRecetteRequest) returns (GetRecetteResponse);
+  rpc Add (AddRecetteRequest) returns (AddRecetteResponse);
+  rpc Update (UpdateRecetteRequest) returns (UpdateRecetteResponse);
+  rpc Delete (DeleteRecetteRequest) returns (DeleteRecetteResponse);
+}
+
+message GetRecetteRequest {
+  string nom = 1;
+  int32 id = 2;
+}
+
+message GetRecetteResponse {
+  repeated Recette recettes = 1;
+}
+
+message AddRecetteRequest {
+    string nom = 1;
+    string description = 2;
+    repeated string ingredients = 3;
+    string instructions = 4;
+    int32 temps_preparation = 5;
+    int32 temps_cuisson = 6;
+  }
+  
+message AddRecetteResponse {
+    Recette recette = 1;
+  }
+  
+message UpdateRecetteRequest {
+    string nom = 1;
+    string description = 2;
+    repeated string ingredients = 3;
+    string instructions = 4;
+    int32 temps_preparation = 5;
+    int32 temps_cuisson = 6;
+  }
+  
+message UpdateRecetteResponse {
+    Recette recette = 1;
+  }
+  
+message DeleteRecetteRequest {
+    string nom = 1;
+    int32 id = 2;
+  }
+  
+message DeleteRecetteResponse {
+    string message = 1;
+  }
