@@ -2,29 +2,43 @@ version: '3.8'
 
 services:
   mariadb:
-    extends:
-      file: ./compose/compose.db.yml
-      service: mariadb
-
-  # mongo:
-  #   extends:
-  #     file: ./compose/compose.db.yml
-  #     service: mongo
+    image: mariadb
+    ports:
+      - 3306:3306
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: passwd
+      MYSQL_DATABASE: app
+      MYSQL_USER: root
+      
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    restart: unless-stopped
+    depends_on:
+      - mariadb
+    ports:
+      - 8080:80
+    environment:
+      PMA_HOST: mariadb
+      PMA_USER: root
+      PMA_PASSWORD: passwd
 
   tracing:
     image: jaegertracing/all-in-one:latest
     environment:
-      - COLLECTOR_OTLP_ENABLED=true
+      COLLECTOR_OTLP_ENABLED: "true"
     ports:
       - 16686:16686
       - 14268:14268
       - 4318:4318
 
   recette-api:
-    extends:
-      file: ./compose/compose.local.yml
-      service: recette-api
-
-networks:
-  default:
-    name: projet_micro_service
+    build:
+      context: ./recette-api
+      dockerfile: ../docker/Dockerfile
+    container_name: recette-container
+    restart: unless-stopped
+    volumes:
+      - ./recette-api:/api
+    ports:
+      - 4002:4000

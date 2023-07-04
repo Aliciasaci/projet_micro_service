@@ -21,6 +21,8 @@ import { Metadata } from '@grpc/grpc-js';
 export class AppController implements RecetteServiceController {
   constructor(private readonly appService: AppService) {}
 
+
+  
   async get(request: GetRecetteRequest, metadata?: Metadata): Promise<GetRecetteResponse> {
     let recette: Recette;
     let recettes: Recette[] = [];
