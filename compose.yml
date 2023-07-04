@@ -5,14 +5,28 @@ services:
     image: mariadb
     ports:
       - 3306:3306
+    restart: unless-stopped
     environment:
-      - MARIADB_ROOT_PASSWORD=passwd
-      - MARIADB_DATABASE=user
+      MYSQL_ROOT_PASSWORD: passwd
+      MYSQL_DATABASE: app
+      MYSQL_USER: root
+      
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    restart: unless-stopped
+    depends_on:
+      - mariadb
+    ports:
+      - 8080:80
+    environment:
+      PMA_HOST: mariadb
+      PMA_USER: root
+      PMA_PASSWORD: passwd
 
   tracing:
     image: jaegertracing/all-in-one:latest
     environment:
-      - COLLECTOR_OTLP_ENABLED=true
+      COLLECTOR_OTLP_ENABLED: "true"
     ports:
       - 16686:16686
       - 14268:14268
