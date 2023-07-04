@@ -3,6 +3,7 @@
 generator client {
   provider = "prisma-client-js"
   previewFeatures = ["tracing"]
+  binaryTargets = ["native", "linux-musl-openssl-3.0.x"]
 }
 datasource db {
   provider = "mysql"
@@ -14,6 +15,7 @@ model Recette {
   description             String?
   ingredients             String?
   instructions            String?
-  temps_preparation       Int?
-  temps_cuisson           Int?
+  tempsPreparation       Int?
+  tempsCuisson           Int?
+  categorie              String?
 }

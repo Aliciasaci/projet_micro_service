@@ -7,6 +7,7 @@ RUN apk update && \
     npm install -g pnpm && \
     pnpm config set global-bin-dir /usr/local/pnpm/bin && \
     export PATH="$PATH:/usr/local/pnpm/bin" && \
-    pnpm install -g @nestjs/cli prisma
+    pnpm install -g @nestjs/cli prisma && \
+    npx prisma migrate dev
 
 CMD ["pnpm", "start:dev"]

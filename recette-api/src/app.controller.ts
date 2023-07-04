@@ -21,14 +21,20 @@ import { Metadata } from '@grpc/grpc-js';
 export class AppController implements RecetteServiceController {
   constructor(private readonly appService: AppService) {}
 
-
-  
+  /**
+   * 
+   * @param request 
+   * @param metadata 
+   * @returns 
+   */
   async get(request: GetRecetteRequest, metadata?: Metadata): Promise<GetRecetteResponse> {
     let recette: Recette;
     let recettes: Recette[] = [];
 
     if (request.id) {
+      console.log("id" + request.id);
       recette = await this.appService.findById(request.id);
+      console.log(recette)
       return { recettes: [recette] };
     } else if (request.nom) {
       recette = await this.appService.findByName(request.nom);
@@ -39,10 +45,19 @@ export class AppController implements RecetteServiceController {
     }
   }
 
+  /**
+   * 
+   * @param request 
+   * @param metadata 
+   * @returns 
+   */
   async update(
     request: UpdateRecetteRequest,
     metadata?: Metadata,
   ): Promise<UpdateRecetteResponse> {
+    console.log(JSON.stringify(request));
+    console.log(request.id);
+    console.log(request.data);
     const updatedRecette = await this.appService.update(request.id, request.data);
     return { recette: updatedRecette };
   }

@@ -11,8 +11,8 @@ export interface Recette {
   description: string;
   ingredients: string;
   instructions: string;
-  temps_preparation: number;
-  temps_cuisson: number;
+  tempsPreparation: number;
+  tempsCuisson: number;
 }
 
 export interface GetRecetteRequest {
@@ -30,8 +30,8 @@ export interface AddRecetteRequest {
   description: string;
   ingredients: string;
   instructions: string;
-  temps_preparation: number;
-  temps_cuisson: number;
+  tempsPreparation: number;
+  tempsCuisson: number;
 }
 
 export interface AddRecetteResponse {

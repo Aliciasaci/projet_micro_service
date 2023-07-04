@@ -17,6 +17,7 @@ export class AppService {
     return results;
   }
 
+  
   async findById(id: number): Promise<Recette> {
     const result: Recette | null = await this.prisma.recette.findUnique({
       where: { id },
@@ -26,6 +27,7 @@ export class AppService {
     }
     return result;
   }
+
 
   async update(id: number, data: Prisma.RecetteUpdateInput): Promise<Recette> {
     const result: Recette | null = await this.prisma.recette.update({
@@ -37,6 +39,7 @@ export class AppService {
     }
     return result;
   }
+
 
   async findByName(nom: string): Promise<Recette> {
     const result: Recette | null = await this.prisma.recette.findFirst({
@@ -51,6 +54,7 @@ export class AppService {
     }
     return result;
   }
+
 
   async delete(id: number): Promise<Recette> {
     const result: Recette | null = await this.prisma.recette.delete({
