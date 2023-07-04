@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  recette-api:
+    image: gplane/pnpm:node18
+    working_dir: /app
+    volumes:
+      - ../recette-api:/app/
+      - ../local/certs:/certs
+      - /app/node_modules
+      - /app/.pnpm-store
+    environment:
+      - MYSQL_URL=mysql://root:passwd@mariadb:3306/recette
+      - insecure=false
+      - PORT=4000
+      - ROOT_CA=/certs/rootCA.pem
+      - JAEGER_URL=http://tracing:14268/api/traces
+    ports:
+      - 4000:4000
+    stdin_open: true
+    command: start:dev
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:3000/health" ]
+      interval: 5s
+      timeout: 10s
+      retries: 5
+
+networks:
+  default:
+    name: projet_micro_service
