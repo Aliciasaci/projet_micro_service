@@ -20,11 +20,11 @@ services:
 
   recette-api:
     build:
-      context: .
-      dockerfile: /docker/Dockerfile
+      context: ./recette-api
+      dockerfile: ../docker/Dockerfile
     container_name: recette-container
     restart: unless-stopped
     volumes:
-      - /recette-api:/api/
+      - ./recette-api:/api
     ports:
       - 4002:4000
