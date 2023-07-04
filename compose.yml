@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  mariadb:
+    image: mariadb
+    ports:
+      - 3306:3306
+    environment:
+      - MARIADB_ROOT_PASSWORD=passwd
+      - MARIADB_DATABASE=user
+
+  tracing:
+    image: jaegertracing/all-in-one:latest
+    environment:
+      - COLLECTOR_OTLP_ENABLED=true
+    ports:
+      - 16686:16686
+      - 14268:14268
+      - 4318:4318
+
+  recette-api:
+    build:
+      context: .
+      dockerfile: /docker/Dockerfile
+    container_name: recette-container
+    restart: unless-stopped
+    volumes:
+      - /recette-api:/api/
+    ports:
+      - 4002:4000

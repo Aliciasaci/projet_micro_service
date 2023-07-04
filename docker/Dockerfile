@@ -2,7 +2,6 @@ FROM node:20-alpine3.17
 
 WORKDIR /api
 
-
 RUN apk update && \
     apk add --no-cache curl && \
     npm install -g pnpm && \
