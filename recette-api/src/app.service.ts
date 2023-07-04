@@ -2,7 +2,7 @@
 import { Injectable } from '@nestjs/common';
 import { Recette } from './stubs/recette/v1alpha/recette';
 import { PrismaService } from './prisma.service';
-import { Prisma, Recette as PrismaRecette } from '@prisma/client';
+import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class AppService {

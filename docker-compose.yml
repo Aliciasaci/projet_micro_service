@@ -6,11 +6,6 @@ services:
       file: ./compose/compose.db.yml
       service: mariadb
 
-  # mongo:
-  #   extends:
-  #     file: ./compose/compose.db.yml
-  #     service: mongo
-
   tracing:
     image: jaegertracing/all-in-one:latest
     environment:
@@ -20,10 +15,10 @@ services:
       - 14268:14268
       - 4318:4318
 
-  # user-api:
-  #   extends:
-  #     file: ./compose/compose.local.yml
-  #     service: recette-api
+  recette-api:
+    extends:
+      file: ./compose/compose.local.yml
+      service: recette-api
 
 networks:
   default:
