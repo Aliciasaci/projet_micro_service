@@ -42,14 +42,15 @@ message AddRecetteResponse {
     Recette recette = 1;
   }
   
+
 message UpdateRecetteRequest {
     Recette recette = 1;
   }
   
 message UpdateRecetteResponse {
-    Recette recette = 1;
-  }
-  
+  Recette recette = 1;
+}
+
 message DeleteRecetteRequest {
     int32 id = 2;
   }
