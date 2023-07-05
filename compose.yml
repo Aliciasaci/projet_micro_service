@@ -42,3 +42,14 @@ services:
       - ./recette-api:/api
     ports:
       - 4002:4000
+
+  livre-api:
+    build:
+      context: ./livre-api
+      dockerfile: ../docker/Dockerfile
+    container_name: livre-container
+    restart: unless-stopped
+    volumes:
+      - ./livre-api:/api
+    ports:
+      - 5002:5000
