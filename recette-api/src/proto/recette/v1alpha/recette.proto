@@ -17,6 +17,7 @@ service RecetteService {
   rpc Add (AddRecetteRequest) returns (AddRecetteResponse);
   rpc Update (UpdateRecetteRequest) returns (UpdateRecetteResponse);
   rpc Delete (DeleteRecetteRequest) returns (DeleteRecetteResponse);
+  rpc List(ListRecettesRequest) returns (ListRecettesResponse);
 }
 
 message GetRecetteRequest {
@@ -25,7 +26,8 @@ message GetRecetteRequest {
 }
 
 message GetRecetteResponse {
-  Recette recettes = 1;
+  // Recette recettes = 1;
+  Recette recette = 2;
 }
 
 message AddRecetteRequest {
@@ -42,14 +44,14 @@ message AddRecetteResponse {
     Recette recette = 1;
   }
   
-
 message UpdateRecetteRequest {
     Recette recette = 1;
   }
   
 message UpdateRecetteResponse {
-  Recette recette = 1;
-}
+    Recette recette = 1;
+  }
+  
 
 message DeleteRecetteRequest {
     int32 id = 2;
@@ -58,3 +60,9 @@ message DeleteRecetteRequest {
 message DeleteRecetteResponse {
     string message = 1;
   }
+
+// message ListRecettesRequest {}
+
+// message ListRecettesResponse {
+//   repeated Recette recette = 1;
+// }

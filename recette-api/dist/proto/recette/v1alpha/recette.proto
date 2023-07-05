@@ -25,7 +25,8 @@ message GetRecetteRequest {
 }
 
 message GetRecetteResponse {
-  Recette recettes = 1;
+  // Recette recettes = 1;
+  Recette recette = 2;
 }
 
 message AddRecetteRequest {
@@ -42,14 +43,14 @@ message AddRecetteResponse {
     Recette recette = 1;
   }
   
-
 message UpdateRecetteRequest {
     Recette recette = 1;
   }
   
 message UpdateRecetteResponse {
-  Recette recette = 1;
-}
+    Recette recette = 1;
+  }
+  
 
 message DeleteRecetteRequest {
     int32 id = 2;
@@ -58,3 +59,4 @@ message DeleteRecetteRequest {
 message DeleteRecetteResponse {
     string message = 1;
   }
+

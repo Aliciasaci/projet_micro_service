@@ -15,7 +15,7 @@ export interface GetRecetteRequest {
     id: number;
 }
 export interface GetRecetteResponse {
-    recettes: Recette[];
+    recette: Recette;
 }
 export interface AddRecetteRequest {
     id: number;

@@ -13,6 +13,7 @@ export interface Recette {
   instructions: string;
   tempsPreparation: number;
   tempsCuisson: number;
+  categorie : string;
 }
 
 export interface GetRecetteRequest {
@@ -21,7 +22,7 @@ export interface GetRecetteRequest {
 }
 
 export interface GetRecetteResponse {
-  recettes: Recette[];
+  recette: Recette;
 }
 
 export interface AddRecetteRequest {
@@ -32,6 +33,7 @@ export interface AddRecetteRequest {
   instructions: string;
   tempsPreparation: number;
   tempsCuisson: number;
+  categorie : string;
 }
 
 export interface AddRecetteResponse {
