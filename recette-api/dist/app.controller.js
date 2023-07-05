@@ -19,26 +19,17 @@ let AppController = exports.AppController = class AppController {
     }
     async get(request, metadata) {
         let recette;
-        let recettes = [];
         if (request.id) {
-            console.log("id" + request.id);
             recette = await this.appService.findById(request.id);
             console.log(recette);
-            return { recettes: [recette] };
+            return { recette: recette };
         }
         else if (request.nom) {
             recette = await this.appService.findByName(request.nom);
-            return { recettes: [recette] };
-        }
-        else {
-            recettes = await this.appService.findAll();
-            return { recettes };
+            return { recette: recette };
         }
     }
     async update(request, metadata) {
-        console.log(JSON.stringify(request));
-        console.log(request.id);
-        console.log(request.data);
         const updatedRecette = await this.appService.update(request.id, request.data);
         return { recette: updatedRecette };
     }

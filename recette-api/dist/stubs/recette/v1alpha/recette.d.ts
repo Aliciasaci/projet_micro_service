@@ -9,13 +9,14 @@ export interface Recette {
     instructions: string;
     tempsPreparation: number;
     tempsCuisson: number;
+    categorie: string;
 }
 export interface GetRecetteRequest {
     nom: string;
     id: number;
 }
 export interface GetRecetteResponse {
-    recettes: Recette[];
+    recette: Recette;
 }
 export interface AddRecetteRequest {
     id: number;
@@ -25,6 +26,7 @@ export interface AddRecetteRequest {
     instructions: string;
     tempsPreparation: number;
     tempsCuisson: number;
+    categorie: string;
 }
 export interface AddRecetteResponse {
     recette: Recette | undefined;

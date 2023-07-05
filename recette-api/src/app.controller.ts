@@ -29,21 +29,17 @@ export class AppController implements RecetteServiceController {
    */
   async get(request: GetRecetteRequest, metadata?: Metadata): Promise<GetRecetteResponse> {
     let recette: Recette;
-    let recettes: Recette[] = [];
 
     if (request.id) {
-      console.log("id" + request.id);
       recette = await this.appService.findById(request.id);
       console.log(recette)
-      return { recettes: [recette] };
+      return { recette: recette };
     } else if (request.nom) {
       recette = await this.appService.findByName(request.nom);
-      return { recettes: [recette] };
-    } else {
-      recettes = await this.appService.findAll();
-      return { recettes };
+      return { recette: recette };
     }
   }
+
 
   /**
    * 
@@ -55,13 +51,16 @@ export class AppController implements RecetteServiceController {
     request: UpdateRecetteRequest,
     metadata?: Metadata,
   ): Promise<UpdateRecetteResponse> {
-    console.log(JSON.stringify(request));
-    console.log(request.id);
-    console.log(request.data);
     const updatedRecette = await this.appService.update(request.id, request.data);
     return { recette: updatedRecette };
   }
 
+  /**
+   * 
+   * @param request 
+   * @param metadata 
+   * @returns 
+   */
   async delete(
     request: DeleteRecetteRequest,
     metadata?: Metadata,
@@ -70,6 +69,11 @@ export class AppController implements RecetteServiceController {
     return { message: `Recette with ID ${deletedRecette.id} has been deleted` };
   }
 
+  /**
+   * 
+   * @param request 
+   * @returns 
+   */
   async add(request: AddRecetteRequest): Promise<AddRecetteResponse> {
     const newRecette = await this.appService.create(request);
     return { recette: newRecette };

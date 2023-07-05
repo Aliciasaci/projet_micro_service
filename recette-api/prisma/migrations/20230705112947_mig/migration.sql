@@ -7,6 +7,7 @@ CREATE TABLE `Recette` (
     `instructions` VARCHAR(191) NULL,
     `tempsPreparation` INTEGER NULL,
     `tempsCuisson` INTEGER NULL,
+    `categorie` VARCHAR(191) NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
