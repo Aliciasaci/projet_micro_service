@@ -30,6 +30,7 @@ export class AppService {
 
 
   async update(id: number, data: Prisma.RecetteUpdateInput): Promise<Recette> {
+    console.log(id, data);
     const result: Recette | null = await this.prisma.recette.update({
       where: { id },
       data,
@@ -64,5 +65,22 @@ export class AppService {
       throw new Error(`Recette with ID ${id} not found`);
     }
     return result;
+  }
+
+
+  //*fonction de conversion vers Recette
+  toRecettePb(recette: Recette): any {
+    const recettePb = {
+      id: recette.id,
+      nom: recette.nom,
+      description: recette.description,
+      ingredients: recette.ingredients,
+      instructions: recette.instructions,
+      tempsPreparation: recette.tempsPreparation,
+      tempsCuisson: recette.tempsCuisson,
+      categorie: recette.categorie,
+    };
+
+    return recettePb;
   }
 }

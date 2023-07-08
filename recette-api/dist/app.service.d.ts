@@ -10,4 +10,5 @@ export declare class AppService {
     update(id: number, data: Prisma.RecetteUpdateInput): Promise<Recette>;
     findByName(nom: string): Promise<Recette>;
     delete(id: number): Promise<Recette>;
+    toRecettePb(recette: Recette): any;
 }
