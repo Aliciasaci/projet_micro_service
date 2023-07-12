@@ -53,3 +53,14 @@ services:
       - ./livre-api:/api
     ports:
       - 5002:5000
+  
+  auth-api:
+    build:
+      context: ./auth-api
+      dockerfile: ../docker/Dockerfile
+    container_name: auth-container
+    restart: unless-stopped
+    volumes:
+      - ./auth-api:/api
+    ports:
+      - 6002:6000
