@@ -13,6 +13,7 @@ exports.AppController = void 0;
 const common_1 = require("@nestjs/common");
 const app_service_1 = require("./app.service");
 const recette_1 = require("./stubs/recette/v1alpha/recette");
+const microservices_1 = require("@nestjs/microservices");
 let AppController = exports.AppController = class AppController {
     constructor(appService) {
         this.appService = appService;
@@ -21,12 +22,21 @@ let AppController = exports.AppController = class AppController {
         let recette;
         if (request.id) {
             recette = await this.appService.findById(request.id);
-            console.log(recette);
-            return { recette: recette };
+            return { recette };
         }
         else if (request.nom) {
             recette = await this.appService.findByName(request.nom);
-            return { recette: recette };
+            return { recette };
+        }
+    }
+    async list(request) {
+        try {
+            const recettes = await this.appService.findAll();
+            const recettesList = recettes.map(this.appService.toRecettePb);
+            return { recettes: recettesList };
+        }
+        catch (error) {
+            throw new microservices_1.RpcException(error);
         }
     }
     async update(request, metadata) {

@@ -11,9 +11,11 @@ import {
   RecetteServiceController,
   UpdateRecetteRequest,
   UpdateRecetteResponse,
+  ListRecettesRequest,
+  ListRecettesResponse,
   RecetteServiceControllerMethods,
 } from './stubs/recette/v1alpha/recette';
-import { GrpcMethod } from '@nestjs/microservices';
+import { GrpcMethod, RpcException } from '@nestjs/microservices';
 import { Metadata } from '@grpc/grpc-js';
 
 @Controller()
@@ -22,30 +24,36 @@ export class AppController implements RecetteServiceController {
   constructor(private readonly appService: AppService) {}
 
   /**
-   * 
-   * @param request 
-   * @param metadata 
-   * @returns 
+   * @param request
+   * @param metadata
+   * @returns
    */
   async get(request: GetRecetteRequest, metadata?: Metadata): Promise<GetRecetteResponse> {
     let recette: Recette;
 
     if (request.id) {
       recette = await this.appService.findById(request.id);
-      console.log(recette)
-      return { recette: recette };
+      return { recette };
     } else if (request.nom) {
       recette = await this.appService.findByName(request.nom);
-      return { recette: recette };
+      return { recette };
     }
   }
 
+  async list(request: ListRecettesRequest): Promise<ListRecettesResponse> {
+    try {
+      const recettes = await this.appService.findAll();
+      const recettesList = recettes.map(this.appService.toRecettePb);
+      return { recettes: recettesList };
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
 
   /**
-   * 
-   * @param request 
-   * @param metadata 
-   * @returns 
+   * @param request
+   * @param metadata
+   * @returns
    */
   async update(
     request: UpdateRecetteRequest,
@@ -56,10 +64,9 @@ export class AppController implements RecetteServiceController {
   }
 
   /**
-   * 
-   * @param request 
-   * @param metadata 
-   * @returns 
+   * @param request
+   * @param metadata
+   * @returns
    */
   async delete(
     request: DeleteRecetteRequest,
@@ -70,9 +77,8 @@ export class AppController implements RecetteServiceController {
   }
 
   /**
-   * 
-   * @param request 
-   * @returns 
+   * @param request
+   * @returns
    */
   async add(request: AddRecetteRequest): Promise<AddRecetteResponse> {
     const newRecette = await this.appService.create(request);

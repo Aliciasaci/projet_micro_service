@@ -6,7 +6,7 @@ exports.protobufPackage = "recette.v1alpha";
 exports.RECETTE_V1ALPHA_PACKAGE_NAME = "recette.v1alpha";
 function RecetteServiceControllerMethods() {
     return function (constructor) {
-        const grpcMethods = ["get", "add", "update", "delete"];
+        const grpcMethods = ["get", "add", "update", "delete", "list"];
         for (const method of grpcMethods) {
             const descriptor = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
             (0, microservices_1.GrpcMethod)("RecetteService", method)(constructor.prototype[method], method, descriptor);

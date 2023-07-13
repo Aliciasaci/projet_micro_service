@@ -34,6 +34,7 @@ let AppService = exports.AppService = class AppService {
         return result;
     }
     async update(id, data) {
+        console.log(id, data);
         const result = await this.prisma.recette.update({
             where: { id },
             data,
@@ -64,6 +65,19 @@ let AppService = exports.AppService = class AppService {
             throw new Error(`Recette with ID ${id} not found`);
         }
         return result;
+    }
+    toRecettePb(recette) {
+        const recettePb = {
+            id: recette.id,
+            nom: recette.nom,
+            description: recette.description,
+            ingredients: recette.ingredients,
+            instructions: recette.instructions,
+            tempsPreparation: recette.tempsPreparation,
+            tempsCuisson: recette.tempsCuisson,
+            categorie: recette.categorie,
+        };
+        return recettePb;
     }
 };
 exports.AppService = AppService = __decorate([
