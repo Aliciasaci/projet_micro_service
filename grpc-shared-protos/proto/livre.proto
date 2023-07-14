@@ -17,6 +17,7 @@ service LivreService {
     rpc Add (AddLivreRequest) returns (AddLivreResponse);
     rpc Update (UpdateLivreRequest) returns (UpdateLivreResponse);
     rpc Delete (DeleteLivreRequest) returns (DeleteLivreResponse);
+    rpc List (ListLivreRequest) returns (ListLivreResponse);
 }
 
 message GetLivreRequest {
@@ -57,4 +58,10 @@ message DeleteLivreRequest {
 
 message DeleteLivreResponse {
     bool success = 1;
+}
+
+message ListLivreRequest {}
+
+message ListLivreResponse {
+    repeated Livre livres = 1;
 }

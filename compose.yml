@@ -43,13 +43,26 @@ services:
     ports:
       - 4002:4000
 
-  livre-api:
+  grpc-api:
     build:
-      context: ./livre-api
+      context: ./grpc-api
       dockerfile: ../docker/Dockerfile
-    container_name: livre-container
+    container_name: api-container
     restart: unless-stopped
     volumes:
-      - ./livre-api:/api
+      - ./grpc-api:/api
+      - ./grpc-shared-protos:/grpc-shared-protos
     ports:
-      - 5002:5000
+      - 5001:5050
+
+  grpc-recette-service:
+    build:
+      context: ./grpc-recette-service
+      dockerfile: ../docker/Dockerfile
+    container_name: grpc-recette-service-container
+    restart: unless-stopped
+    volumes:
+      - ./grpc-recette-service:/api
+      - ./grpc-shared-protos:/grpc-shared-protos
+    ports:
+      - 5002:5060
