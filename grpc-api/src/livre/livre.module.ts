@@ -13,7 +13,7 @@ import { join } from 'path';
         options: {
           url: '0.0.0.0:50052',
           package: LIVRE_PACKAGE_NAME,
-          protoPath: join(__dirname, 'livre.proto'),
+          protoPath: join(__dirname, '../../../grpc-shared-protos/proto/livre.proto'),
         },
       },
     ]),
