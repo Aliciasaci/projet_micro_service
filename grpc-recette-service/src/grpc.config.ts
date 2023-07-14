@@ -10,7 +10,7 @@ export const grpcConfig = addReflectionToGrpcConfig({
     package: RECETTE_PACKAGE_NAME,
     protoPath: join(
       __dirname,
-      '../../../grpc-shared-protos/proto/recette.proto',
+      '../../grpc-shared-protos/proto/recette.proto',
     ),
   },
 }) as GrpcOptions;

@@ -32,28 +32,28 @@ services:
       - 14268:14268
       - 4318:4318
 
-  recette-api:
-    build:
-      context: ./recette-api
-      dockerfile: ../docker/Dockerfile
-    container_name: recette-container
-    restart: unless-stopped
-    volumes:
-      - ./recette-api:/api
-    ports:
-      - 4002:4000
+  # recette-api:
+  #   build:
+  #     context: ./recette-api
+  #     dockerfile: ../docker/Dockerfile
+  #   container_name: recette-container
+  #   restart: unless-stopped
+  #   volumes:
+  #     - ./recette-api:/api
+  #   ports:
+  #     - 4002:4000
 
-  grpc-api:
-    build:
-      context: ./grpc-api
-      dockerfile: ../docker/Dockerfile
-    container_name: api-container
-    restart: unless-stopped
-    volumes:
-      - ./grpc-api:/api
-      - ./grpc-shared-protos:/grpc-shared-protos
-    ports:
-      - 5001:5050
+  # grpc-api:
+  #   build:
+  #     context: ./grpc-api
+  #     dockerfile: ../docker/Dockerfile
+  #   container_name: api-container
+  #   restart: unless-stopped
+  #   volumes:
+  #     - ./grpc-api:/api
+  #     - ./grpc-shared-protos:/grpc-shared-protos
+  #   ports:
+  #     - 5001:5050
 
   grpc-recette-service:
     build:
