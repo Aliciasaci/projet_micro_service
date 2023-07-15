@@ -26,7 +26,6 @@ export interface GetRecetteResponse {
 }
 
 export interface AddRecetteRequest {
-  id: number;
   nom: string;
   description: string;
   ingredients: string;
@@ -50,7 +49,6 @@ export interface UpdateRecetteResponse {
 }
 
 export interface DeleteRecetteRequest {
-  nom: string;
   id: number;
 }
 

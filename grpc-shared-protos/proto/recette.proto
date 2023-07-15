@@ -3,13 +3,14 @@ syntax = "proto3";
 package recette;
 
 message Recette {
-  string nom = 1;
-  string description = 2;
-  string ingredients = 3;
-  string instructions = 4;
-  int32 tempsPreparation = 5;
-  int32 tempsCuisson = 6;
-  string categorie = 7;
+  int32 id = 1;
+  string nom = 2;
+  string description = 3;
+  string ingredients = 4;
+  string instructions = 5;
+  int32 tempsPreparation = 6;
+  int32 tempsCuisson = 7;
+  string categorie = 8;
 }
 
 service RecetteService {
@@ -26,7 +27,6 @@ message GetRecetteRequest {
 }
 
 message GetRecetteResponse {
-  // Recette recettes = 1;
   Recette recette = 2;
 }
 

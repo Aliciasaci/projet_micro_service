@@ -1,10 +1,12 @@
 /* eslint-disable */
-import { GrpcMethod, GrpcStreamMethod } from "@nestjs/microservices";
-import { Observable } from "rxjs";
+import { Metadata } from '@grpc/grpc-js';
+import { GrpcMethod, GrpcStreamMethod } from '@nestjs/microservices';
+import { Observable } from 'rxjs';
 
-export const protobufPackage = "recette";
+export const protobufPackage = 'recette';
 
 export interface Recette {
+  id: number;
   nom: string;
   description: string;
   ingredients: string;
@@ -20,7 +22,7 @@ export interface GetRecetteRequest {
 }
 
 export interface GetRecetteResponse {
-  recettes: Recette | undefined;
+  recette: Recette;
 }
 
 export interface AddRecetteRequest {
@@ -38,7 +40,8 @@ export interface AddRecetteResponse {
 }
 
 export interface UpdateRecetteRequest {
-  recette: Recette | undefined;
+  id: number;
+  data: Partial<Recette>;
 }
 
 export interface UpdateRecetteResponse {
@@ -53,45 +56,110 @@ export interface DeleteRecetteResponse {
   message: string;
 }
 
-export const RECETTE_PACKAGE_NAME = "recette";
-
-export interface RecetteServiceClient {
-  get(request: GetRecetteRequest): Observable<GetRecetteResponse>;
-
-  add(request: AddRecetteRequest): Observable<AddRecetteResponse>;
-
-  update(request: UpdateRecetteRequest): Observable<UpdateRecetteResponse>;
-
-  delete(request: DeleteRecetteRequest): Observable<DeleteRecetteResponse>;
+export interface ListRecettesResponse {
+  recettes: Recette[] | undefined;
 }
 
-export interface RecetteServiceController {
-  get(request: GetRecetteRequest): Promise<GetRecetteResponse> | Observable<GetRecetteResponse> | GetRecetteResponse;
+export interface ListRecettesRequest {}
 
-  add(request: AddRecetteRequest): Promise<AddRecetteResponse> | Observable<AddRecetteResponse> | AddRecetteResponse;
+export const RECETTE_PACKAGE_NAME = 'recette';
+
+export interface RecetteServiceClient {
+  get(
+    request: GetRecetteRequest,
+    metadata?: Metadata,
+  ): Observable<GetRecetteResponse>;
+
+  add(
+    request: AddRecetteRequest,
+    metadata?: Metadata,
+  ): Observable<AddRecetteResponse>;
 
   update(
     request: UpdateRecetteRequest,
-  ): Promise<UpdateRecetteResponse> | Observable<UpdateRecetteResponse> | UpdateRecetteResponse;
+    metadata?: Metadata,
+  ): Observable<UpdateRecetteResponse>;
 
   delete(
     request: DeleteRecetteRequest,
-  ): Promise<DeleteRecetteResponse> | Observable<DeleteRecetteResponse> | DeleteRecetteResponse;
+    metadata?: Metadata,
+  ): Observable<DeleteRecetteResponse>;
+
+  list(
+    request: ListRecettesRequest,
+    metadata?: Metadata,
+  ): Observable<ListRecettesResponse>;
+}
+
+export interface RecetteServiceController {
+  get(
+    request: GetRecetteRequest,
+    metadata?: Metadata,
+  ):
+    | Promise<GetRecetteResponse>
+    | Observable<GetRecetteResponse>
+    | GetRecetteResponse;
+
+  add(
+    request: AddRecetteRequest,
+    metadata?: Metadata,
+  ):
+    | Promise<AddRecetteResponse>
+    | Observable<AddRecetteResponse>
+    | AddRecetteResponse;
+
+  update(
+    request: UpdateRecetteRequest,
+    metadata?: Metadata,
+  ):
+    | Promise<UpdateRecetteResponse>
+    | Observable<UpdateRecetteResponse>
+    | UpdateRecetteResponse;
+
+  delete(
+    request: DeleteRecetteRequest,
+    metadata?: Metadata,
+  ):
+    | Promise<DeleteRecetteResponse>
+    | Observable<DeleteRecetteResponse>
+    | DeleteRecetteResponse;
+
+  list(
+    request: ListRecettesRequest,
+    metadata?: Metadata,
+  ):
+    | Promise<ListRecettesResponse>
+    | Observable<ListRecettesResponse>
+    | ListRecettesResponse;
 }
 
 export function RecetteServiceControllerMethods() {
   return function (constructor: Function) {
-    const grpcMethods: string[] = ["get", "add", "update", "delete"];
+    const grpcMethods: string[] = ['get', 'add', 'update', 'delete', 'list'];
     for (const method of grpcMethods) {
-      const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
-      GrpcMethod("RecetteService", method)(constructor.prototype[method], method, descriptor);
+      const descriptor: any = Reflect.getOwnPropertyDescriptor(
+        constructor.prototype,
+        method,
+      );
+      GrpcMethod('RecetteService', method)(
+        constructor.prototype[method],
+        method,
+        descriptor,
+      );
     }
     const grpcStreamMethods: string[] = [];
     for (const method of grpcStreamMethods) {
-      const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
-      GrpcStreamMethod("RecetteService", method)(constructor.prototype[method], method, descriptor);
+      const descriptor: any = Reflect.getOwnPropertyDescriptor(
+        constructor.prototype,
+        method,
+      );
+      GrpcStreamMethod('RecetteService', method)(
+        constructor.prototype[method],
+        method,
+        descriptor,
+      );
     }
   };
 }
 
-export const RECETTE_SERVICE_NAME = "RecetteService";
+export const RECETTE_SERVICE_NAME = 'RecetteService';
