@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Recette } from './entity/recette.entity';
+import { Recette } from './recette.pb';
 import { Prisma } from '@prisma/client';
 import { PrismaService } from 'src/prisma.service';
 

@@ -8,8 +8,12 @@ services:
     restart: unless-stopped
     environment:
       MYSQL_ROOT_PASSWORD: passwd
-      MYSQL_DATABASE: app
+      MYSQL_DATABASE: recette
       MYSQL_USER: root
+      MYSQL_INIT_COMMAND: SET GLOBAL max_allowed_packet=67108864;
+    volumes:
+      - ./sql/recette.sql:/docker-entrypoint-initdb.d/recette.sql
+      - ./sql/livre.sql:/docker-entrypoint-initdb.d/livre.sql
       
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
@@ -31,17 +35,6 @@ services:
       - 16686:16686
       - 14268:14268
       - 4318:4318
-
-  recette-api:
-    build:
-      context: ./recette-api
-      dockerfile: ../docker/Dockerfile
-    container_name: recette-container
-    restart: unless-stopped
-    volumes:
-      - ./recette-api:/api
-    ports:
-      - 4002:4000
 
   grpc-api:
     build:
@@ -66,3 +59,15 @@ services:
       - ./grpc-shared-protos:/grpc-shared-protos
     ports:
       - 5002:5060
+
+  grpc-livre-service:
+    build:
+      context: ./grpc-livre-service
+      dockerfile: ../docker/Dockerfile
+    container_name: grpc-livre-service-container
+    restart: unless-stopped
+    volumes:
+      - ./grpc-livre-service:/api
+      - ./grpc-shared-protos:/grpc-shared-protos
+    ports:
+      - 5003:5070

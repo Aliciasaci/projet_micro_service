@@ -10,11 +10,13 @@ message Livre {
     string type = 3;
     string auteur = 4;
     repeated recette.Recette recettes = 5;
+    int32 user_id = 6;
 }
 
 service LivreService {
     rpc Get (GetLivreRequest) returns (GetLivreResponse);
     rpc Add (AddLivreRequest) returns (AddLivreResponse);
+    rpc AddRecetteToLivre (AddRecetteToLivreRequest) returns (AddRecetteToLivreResponse);
     rpc Update (UpdateLivreRequest) returns (UpdateLivreResponse);
     rpc Delete (DeleteLivreRequest) returns (DeleteLivreResponse);
     rpc List (ListLivreRequest) returns (ListLivreResponse);
@@ -40,12 +42,18 @@ message AddLivreResponse {
     Livre livre = 1;
 }
 
+message AddRecetteToLivreRequest {
+    int32 id = 1;
+    recette.Recette recette = 2;
+}
+
+message AddRecetteToLivreResponse {
+    Livre livre = 1;
+}
+
 message UpdateLivreRequest {
     int32 id = 1;
-    string titre = 2;
-    string type = 3;
-    string auteur = 4;
-    repeated recette.Recette recettes = 5;
+    Livre data = 2;
 }
 
 message UpdateLivreResponse {
