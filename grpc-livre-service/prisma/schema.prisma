@@ -1,0 +1,32 @@
+generator client {
+    provider        = "prisma-client-js"
+    previewFeatures = ["tracing"]
+    binaryTargets   = ["native", "linux-musl-openssl-3.0.x"]
+}
+
+datasource db {
+    provider = "mysql"
+    url      = env("DATABASE_URL")
+}
+
+model Livre {
+    id       Int       @id @default(autoincrement())
+    titre    String
+    type     String?
+    auteur   String?
+    recettes Recette[]
+    user_id  Int?
+}
+
+model Recette {
+    id               Int     @id @default(autoincrement())
+    nom              String
+    description      String?
+    ingredients      String?
+    instructions     String?
+    tempsPreparation Int?
+    tempsCuisson     Int?
+    categorie        String?
+    livre            Livre?  @relation(fields: [livreId], references: [id])
+    livreId          Int?
+}
