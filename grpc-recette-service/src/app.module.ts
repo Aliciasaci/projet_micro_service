@@ -5,7 +5,6 @@ import { AppService } from './app.service';
 import { GrpcReflectionModule } from 'nestjs-grpc-reflection';
 import { grpcConfig } from './grpc.config';
 import { PrismaService } from './prisma.service';
-import { RecetteModule } from './recette/recette.module';
 
 @Module({
   imports: [
@@ -13,7 +12,6 @@ import { RecetteModule } from './recette/recette.module';
       ignoreEnvFile: process.env.NODE_ENV === 'production',
       isGlobal: true,
     }),
-    RecetteModule,
     GrpcReflectionModule.register(grpcConfig),
   ],
 
