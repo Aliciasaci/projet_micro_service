@@ -1,6 +1,7 @@
 /* eslint-disable */
 import { GrpcMethod, GrpcStreamMethod } from "@nestjs/microservices";
 import { Observable } from "rxjs";
+import { Metadata } from '@grpc/grpc-js';
 
 export const protobufPackage = "auth";
 
@@ -44,19 +45,19 @@ export interface ValidateResponse {
 export const AUTH_PACKAGE_NAME = "auth";
 
 export interface AuthServiceClient {
-  register(request: RegisterRequest): Observable<RegisterResponse>;
+  register(request: RegisterRequest, metadata?: Metadata): Observable<RegisterResponse>;
 
-  login(request: LoginRequest): Observable<LoginResponse>;
+  login(request: LoginRequest, metadata?: Metadata): Observable<LoginResponse>;
 
-  validate(request: ValidateRequest): Observable<ValidateResponse>;
+  validate(request: ValidateRequest, metadata?: Metadata): Observable<ValidateResponse>;
 }
 
 export interface AuthServiceController {
-  register(request: RegisterRequest): Promise<RegisterResponse> | Observable<RegisterResponse> | RegisterResponse;
+  register(request: RegisterRequest, metadata?: Metadata): Promise<RegisterResponse> | Observable<RegisterResponse> | RegisterResponse;
 
-  login(request: LoginRequest): Promise<LoginResponse> | Observable<LoginResponse> | LoginResponse;
+  login(request: LoginRequest, metadata?: Metadata): Promise<LoginResponse> | Observable<LoginResponse> | LoginResponse;
 
-  validate(request: ValidateRequest): Promise<ValidateResponse> | Observable<ValidateResponse> | ValidateResponse;
+  validate(request: ValidateRequest, metadata?: Metadata): Promise<ValidateResponse> | Observable<ValidateResponse> | ValidateResponse;
 }
 
 export function AuthServiceControllerMethods() {

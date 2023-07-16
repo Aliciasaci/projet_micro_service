@@ -11,20 +11,3 @@ export class PrismaService extends PrismaClient implements OnModuleInit {
     });
   }
 }
-
-// import { PrismaClient } from '@prisma/client';
-// import { Injectable } from '@nestjs/common';
-// import { User } from '.prisma/client';
-
-// @Injectable()
-// export class PrismaService {
-//   private readonly prisma: PrismaClient;
-
-//   constructor() {
-//     this.prisma = new PrismaClient();
-//   }
-
-//   get user(): typeof User {
-//     return this.prisma.user;
-//   }
-// }
