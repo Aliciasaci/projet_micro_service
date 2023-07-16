@@ -41,7 +41,7 @@ export class AuthService {
       return { status: HttpStatus.NOT_FOUND, error: ['Password wrong'], token: null };
     }
 
-    const token = this.jwtService.generateToken(user.id, user.email);
+    const token = this.jwtService.generateToken(user);
 
     return { token, status: HttpStatus.OK, error: null };
   }
