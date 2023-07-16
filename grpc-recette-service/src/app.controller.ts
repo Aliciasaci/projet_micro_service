@@ -14,11 +14,7 @@ import {
   ListRecettesRequest,
   ListRecettesResponse,
   RecetteServiceControllerMethods,
-<<<<<<< HEAD:recette-api/src/app.controller.ts
-} from './stubs/recette/v1alpha/recette';
-=======
 } from './recette/recette.pb';
->>>>>>> final-api:grpc-recette-service/src/app.controller.ts
 import { GrpcMethod, RpcException } from '@nestjs/microservices';
 import { Metadata } from '@grpc/grpc-js';
 
