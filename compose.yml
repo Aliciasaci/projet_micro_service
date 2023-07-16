@@ -80,5 +80,6 @@ services:
     restart: unless-stopped
     volumes:
       - ./auth-api:/api
+      - ./grpc-shared-protos:/grpc-shared-protos
     ports:
       - 5004:5080

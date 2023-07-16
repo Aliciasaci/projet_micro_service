@@ -15,7 +15,10 @@ import { join } from 'path';
         options: {
           url: '0.0.0.0:50051',
           package: AUTH_PACKAGE_NAME,
-          protoPath: join(__dirname, 'auth.proto'),
+          protoPath: join(
+            __dirname,
+            '../../../grpc-shared-protos/proto/auth.proto',
+          ),
         },
       },
     ]),

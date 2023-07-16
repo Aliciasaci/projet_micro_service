@@ -28,6 +28,7 @@ export interface AddLivreRequest {
   type: string;
   auteur: string;
   recettes: Recette[];
+  user_id: number;
 }
 
 export interface AddLivreResponse {
@@ -45,7 +46,7 @@ export interface AddRecetteToLivreResponse {
 
 export interface UpdateLivreRequest {
   id: number;
-  data: Livre | undefined;
+  data: Partial<Livre> | undefined;
 }
 
 export interface UpdateLivreResponse {

@@ -3,6 +3,7 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
 import { LIVRE_SERVICE_NAME, LIVRE_PACKAGE_NAME } from './livre.pb';
 import { LivreController } from './livre.controller';
 import { join } from 'path';
+import { AuthModule } from 'src/auth/auth.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { join } from 'path';
         },
       },
     ]),
+    AuthModule,
   ],
   controllers: [LivreController],
 })

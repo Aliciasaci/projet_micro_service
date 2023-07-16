@@ -63,8 +63,8 @@ export class RecetteController implements OnModuleInit {
   }
 
   @Get()
-  private async list(@Req() request: Request): Promise<Observable<ListRecettesResponse>> {
-    const body: ListRecettesRequest = request.body;
+  private async list(): Promise<Observable<ListRecettesResponse>> {
+    const body: ListRecettesRequest = {};
     
     return this.svc.list(body);
   }
