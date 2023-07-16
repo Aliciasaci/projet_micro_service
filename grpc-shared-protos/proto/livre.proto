@@ -1,0 +1,75 @@
+syntax = "proto3";
+
+package livre;
+
+import "recette.proto";
+
+message Livre {
+    int32 id = 1;
+    string titre = 2;
+    string type = 3;
+    string auteur = 4;
+    repeated recette.Recette recettes = 5;
+    int32 user_id = 6;
+}
+
+service LivreService {
+    rpc Get (GetLivreRequest) returns (GetLivreResponse);
+    rpc Add (AddLivreRequest) returns (AddLivreResponse);
+    rpc AddRecetteToLivre (AddRecetteToLivreRequest) returns (AddRecetteToLivreResponse);
+    rpc Update (UpdateLivreRequest) returns (UpdateLivreResponse);
+    rpc Delete (DeleteLivreRequest) returns (DeleteLivreResponse);
+    rpc List (ListLivreRequest) returns (ListLivreResponse);
+}
+
+message GetLivreRequest {
+    int32 id = 1;
+    string titre = 2;
+}
+
+message GetLivreResponse {
+    repeated Livre livres = 1;
+}
+
+message AddLivreRequest {
+    string titre = 1;
+    string type = 2;
+    string auteur = 3;
+    repeated recette.Recette recettes = 4;
+}
+
+message AddLivreResponse {
+    Livre livre = 1;
+}
+
+message AddRecetteToLivreRequest {
+    int32 id = 1;
+    recette.Recette recette = 2;
+}
+
+message AddRecetteToLivreResponse {
+    Livre livre = 1;
+}
+
+message UpdateLivreRequest {
+    int32 id = 1;
+    Livre data = 2;
+}
+
+message UpdateLivreResponse {
+    Livre livre = 1;
+}
+
+message DeleteLivreRequest {
+    int32 id = 1;
+}
+
+message DeleteLivreResponse {
+    bool success = 1;
+}
+
+message ListLivreRequest {}
+
+message ListLivreResponse {
+    repeated Livre livres = 1;
+}

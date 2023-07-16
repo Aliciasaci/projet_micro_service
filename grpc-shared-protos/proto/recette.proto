@@ -1,0 +1,93 @@
+syntax = "proto3";
+
+package recette;
+
+message Recette {
+  int32 id = 1;
+  string nom = 2;
+  string description = 3;
+  string ingredients = 4;
+  string instructions = 5;
+  int32 tempsPreparation = 6;
+  int32 tempsCuisson = 7;
+  string categorie = 8;
+}
+
+service RecetteService {
+  rpc Get (GetRecetteRequest) returns (GetRecetteResponse);
+  rpc Add (AddRecetteRequest) returns (AddRecetteResponse);
+  rpc Update (UpdateRecetteRequest) returns (UpdateRecetteResponse);
+  rpc Delete (DeleteRecetteRequest) returns (DeleteRecetteResponse);
+  rpc List(ListRecettesRequest) returns (ListRecettesResponse);
+}
+
+message GetRecetteRequest {
+  string nom = 1;
+  int32 id = 2;
+}
+
+message GetRecetteResponse {
+<<<<<<< HEAD:recette-api/dist/proto/recette/v1alpha/recette.proto
+  // Recette recettes = 1;
+=======
+>>>>>>> final-api:grpc-shared-protos/proto/recette.proto
+  Recette recette = 2;
+}
+
+message AddRecetteRequest {
+    string nom = 1;
+    string description = 2;
+    string ingredients = 3;
+    string instructions = 4;
+    int32 tempsPreparation = 5;
+    int32 tempsCuisson = 6;
+    string categorie = 7;
+  }
+
+message AddRecetteResponse {
+    Recette recette = 1;
+  }
+<<<<<<< HEAD:recette-api/dist/proto/recette/v1alpha/recette.proto
+  
+message UpdateRecetteRequest {
+    int32 id = 1;
+    Recette data = 2;
+  }
+  
+message UpdateRecetteResponse {
+    Recette recette = 1;
+  }
+  
+=======
+
+message UpdateRecetteRequest {
+    int32 id = 1;
+    Recette data = 2;
+  }
+
+message UpdateRecetteResponse {
+    Recette recette = 1;
+  }
+
+>>>>>>> final-api:grpc-shared-protos/proto/recette.proto
+
+message DeleteRecetteRequest {
+
+    int32 id = 2;
+  }
+
+message DeleteRecetteResponse {
+    string message = 1;
+  }
+
+//reçoit rien 
+message ListRecettesRequest {}
+
+//renvoit une liste de recette
+message ListRecettesResponse {
+  repeated Recette recettes = 1;
+<<<<<<< HEAD:recette-api/dist/proto/recette/v1alpha/recette.proto
+}
+=======
+}
+>>>>>>> final-api:grpc-shared-protos/proto/recette.proto
