@@ -1,6 +1,7 @@
 import { HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { PrismaService } from '../../prisma.service';
 import { JwtService } from './jwt.service';
+import { User } from '../auth.pb';
 import { RegisterRequestDto, LoginRequestDto, ValidateRequestDto } from '../auth.dto';
 import { LoginResponse, RegisterResponse, ValidateResponse } from '../auth.pb';
 
@@ -15,7 +16,7 @@ export class AuthService {
   }
 
   public async register({ email, password }: RegisterRequestDto): Promise<RegisterResponse> {
-    const existingUser = await this.prisma.user.findUnique({ where: { email } });
+    const existingUser: User = await this.prisma.user.findUnique({ where: { email } });
 
     if (existingUser) {
       return { status: HttpStatus.CONFLICT, error: ['E-Mail already exists'] };
