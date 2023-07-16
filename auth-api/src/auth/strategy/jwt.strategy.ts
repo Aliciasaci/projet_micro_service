@@ -1,15 +1,15 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
-import { Auth } from '../auth.entity';
+import { PrismaService } from '../prisma.service';
 import { JwtService } from '../service/jwt.service';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
-  @Inject(JwtService)
-  private readonly jwtService: JwtService;
-
-  constructor() {
+  constructor(
+    @Inject(JwtService) private readonly jwtService: JwtService,
+    private readonly prisma: PrismaService,
+  ) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       secretOrKey: 'dev',
@@ -17,7 +17,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  private validate(token: string): Promise<Auth | never> {
+  async validate(token: string): Promise<any> {
     return this.jwtService.validateUser(token);
   }
 }
