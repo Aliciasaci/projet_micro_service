@@ -1,30 +1,27 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService as Jwt } from '@nestjs/jwt';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { Auth } from '../auth.entity';
+import { PrismaService } from './prisma.service';
 import * as bcrypt from 'bcryptjs';
 
 @Injectable()
 export class JwtService {
-  @InjectRepository(Auth)
-  private readonly repository: Repository<Auth>;
-
   private readonly jwt: Jwt;
+  private readonly prisma: PrismaService;
 
-  constructor(jwt: Jwt) {
+  constructor(jwt: Jwt, prisma: PrismaService) {
     this.jwt = jwt;
+    this.prisma = prisma;
   }
 
   public async decode(token: string): Promise<unknown> {
     return this.jwt.decode(token, null);
   }
 
-  public async validateUser(decoded: any): Promise<Auth> {
-    return this.repository.findOne(decoded.id);
+  public async validateUser(decoded: any): Promise<any> {
+    return this.prisma.auth.findUnique({ where: { id: decoded.id } });
   }
 
-  public generateToken(auth: Auth): string {
+  public generateToken(auth: any): string {
     return this.jwt.sign({ id: auth.id, email: auth.email });
   }
 

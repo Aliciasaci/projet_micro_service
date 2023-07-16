@@ -1,38 +1,41 @@
 import { HttpStatus, Inject, Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { PrismaService } from './prisma.service';
 import { JwtService } from './jwt.service';
 import { RegisterRequestDto, LoginRequestDto, ValidateRequestDto } from '../auth.dto';
-import { Auth } from '../auth.entity';
+import { Auth } from '@prisma/client';
 import { LoginResponse, RegisterResponse, ValidateResponse } from '../auth.pb';
 
 @Injectable()
 export class AuthService {
-  @InjectRepository(Auth)
-  private readonly repository: Repository<Auth>;
-
-  @Inject(JwtService)
+  private readonly prisma: PrismaService;
   private readonly jwtService: JwtService;
 
-  public async register({ email, password }: RegisterRequestDto): Promise<RegisterResponse> {
-    let auth: Auth = await this.repository.findOne({ where: { email } });
+  constructor(prisma: PrismaService, jwtService: JwtService) {
+    this.prisma = prisma;
+    this.jwtService = jwtService;
+  }
 
-    if (auth) {
+  public async register({ email, password }: RegisterRequestDto): Promise<RegisterResponse> {
+    const existingAuth: Auth = await this.prisma.auth.findUnique({ where: { email } });
+
+    if (existingAuth) {
       return { status: HttpStatus.CONFLICT, error: ['E-Mail already exists'] };
     }
 
-    auth = new Auth();
+    const hashedPassword: string = this.jwtService.encodePassword(password);
 
-    auth.email = email;
-    auth.password = this.jwtService.encodePassword(password);
-
-    await this.repository.save(auth);
+    await this.prisma.auth.create({
+      data: {
+        email,
+        password: hashedPassword,
+      },
+    });
 
     return { status: HttpStatus.CREATED, error: null };
   }
 
   public async login({ email, password }: LoginRequestDto): Promise<LoginResponse> {
-    const auth: Auth = await this.repository.findOne({ where: { email } });
+    const auth: Auth | null = await this.prisma.auth.findUnique({ where: { email } });
 
     if (!auth) {
       return { status: HttpStatus.NOT_FOUND, error: ['E-Mail not found'], token: null };
@@ -56,7 +59,7 @@ export class AuthService {
       return { status: HttpStatus.FORBIDDEN, error: ['Token is invalid'], userId: null };
     }
 
-    const auth: Auth = await this.jwtService.validateUser(decoded);
+    const auth: Auth | null = await this.prisma.auth.findUnique({ where: { id: decoded.id } });
 
     if (!auth) {
       return { status: HttpStatus.CONFLICT, error: ['User not found'], userId: null };
