@@ -16,10 +16,12 @@ import {
   ListLivreResponse,
   UpdateLivreRequest,
   UpdateLivreResponse,
+  LivreServiceControllerMethods
 } from './livre/proto/livre.pb';
 import { Metadata } from '@grpc/grpc-js';
 
 @Controller()
+@LivreServiceControllerMethods()
 export class AppController implements LivreServiceController {
   constructor(private readonly livreService: AppService) {}
 
